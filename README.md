@@ -58,3 +58,17 @@ Once the docker image is built, you can fetch the python package zip file using:
 > docker rm -v ${container_id}
 ```
 
+
+# HOW TO RUN VERIFIER 
+
+## First compile
+```
+python3 src/starkware/cairo/lang/scripts/cairo-compile     --cairo_path=src     src/starkware/cairo/cairo_verifier/layouts/all_cairo/cairo_verifier.cairo     --output cairo_verifier.json    
+ --no_debug_info     --proof_mode
+```
+## Then run, remember only proofs with same layout as in verifier can be verified. So in this case only dynamic proofs. Input to verifier is proof wrapped with 
+{"proof": proof}
+```
+python3 src/starkware/cairo/lang/scripts/cairo-run    --program=cairo_verifier.json     --layout=recursive_with_poseidon     --program_input=proof1.json     --print_output     --print_info 
+    --proof_mode
+```
